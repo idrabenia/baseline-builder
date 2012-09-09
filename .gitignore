@@ -1,4 +1,6 @@
 *.class
+.idea
+baseline-builder.imp
 
 # Package Files #
 *.jar
