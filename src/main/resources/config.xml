@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <webServer>
+        <deploymentPath>/var/tmp</deploymentPath>
+        <remoteMachine>
+            <host>mnsmispais02</host>
+            <port>22</port>
+            <login>root</login>
+            <password>install</password>
+            <shellDelay>3000</shellDelay>
+        </remoteMachine>
+    </webServer>
+</config>

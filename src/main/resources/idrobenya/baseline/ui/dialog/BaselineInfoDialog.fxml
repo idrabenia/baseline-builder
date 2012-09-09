@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="291.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <Label cache="true" layoutX="14.0" layoutY="6.0" text="Name" />
+    <TextField fx:id="baselineNameField" layoutX="14.0" layoutY="22.0" prefWidth="265.0" style="-fx-focus-color:  rgba(0,0,0,0);" />
+    <Label cache="true" layoutX="14.0" layoutY="58.0" text="Wireframes Path" />
+    <TextField fx:id="wireframesDirectoryPathField" editable="false" layoutX="14.0" layoutY="74.0" prefWidth="220.0" style="-fx-focus-color:  rgba(0,0,0,0);" />
+    <Button layoutX="242.0" layoutY="74.0" mnemonicParsing="false" onAction="#onSelectDirectoryButtonClicked" prefHeight="22.0" prefWidth="32.0" text="..." />
+    <Button defaultButton="true" layoutX="90.0" layoutY="119.0" mnemonicParsing="false" onAction="#onOkButtonClicked" prefWidth="56.0" style="-fx-base: green;" text="OK" />
+    <Button cancelButton="true" layoutX="147.0" layoutY="119.0" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Cancel" />
+  </children>
+  <stylesheets>
+    <URL value="@../application.css" />
+  </stylesheets>
+</AnchorPane>
