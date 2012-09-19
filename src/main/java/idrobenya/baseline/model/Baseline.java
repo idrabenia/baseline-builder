@@ -62,7 +62,7 @@ public class Baseline {
         String archivePath = makeTempFilePath(name, ".zip");
 
         ZipFile zipFile = new ZipFile(archivePath);
-        zipFile.setRunInThread(true);
+        zipFile.setRunInThread(false);
 
         ZipParameters zipParams = new ZipParameters();
         zipParams.setRootFolderInZip(name);
@@ -86,7 +86,7 @@ public class Baseline {
     private void deployBaseline(final File wireframesArchive) {
         Validate.notNull(wireframesArchive);
 
-        SshTemplate<Void> deployTemplate = new SshTemplate<Void>(Config.getInstance()) {
+        SshTemplate<Void> deployTemplate = new SshTemplate<Void>() {
             @Override
             protected Void processWithSession(Session session) throws Exception {
                 return deployBaselineUsingSsh(this, session, wireframesArchive);
@@ -97,6 +97,7 @@ public class Baseline {
 
     private Void deployBaselineUsingSsh(SshTemplate<Void> template, Session session, File wireframesArchive)
             throws Exception {
+        Validate.isTrue(wireframesArchive.exists());
         final String DEPLOYMENT_PATH = Config.getInstance().getWebServer().getDeploymentPath();
 
         ChannelSftp channelSftp = template.getSftpChannel(session);
@@ -104,16 +105,19 @@ public class Baseline {
         channelSftp.put(new FileInputStream(wireframesArchive), wireframesArchive.getName());
         channelSftp.disconnect();
 
-        template.executeCommand(session, "nohup unzip " + DEPLOYMENT_PATH + "/" + wireframesArchive.getName()
+        Thread.sleep(1000);
+
+        template.executeCommand(session, "unzip -o " + DEPLOYMENT_PATH + "/" + wireframesArchive.getName()
                 + " -d " + DEPLOYMENT_PATH);
 
-        template.executeCommand(session, "nohup rm -f " + DEPLOYMENT_PATH + "/" + wireframesArchive.getName());
+        template.executeCommand(session, "rm -f " + DEPLOYMENT_PATH + "/" + wireframesArchive.getName());
+//        template.executeCommand(session, "make_baseline.rb " + DEPLOYMENT_PATH + " " + wireframesArchive.getName());
 
         return null;
     }
 
     public void delete() {
-        SshTemplate<Void> deleteTemplate = new SshTemplate<Void>(Config.getInstance()) {
+        SshTemplate<Void> deleteTemplate = new SshTemplate<Void>() {
             @Override
             protected Void processWithSession(Session session) throws Exception {
                 return executeDeleteCommandUsingSsh(this, session);
@@ -133,7 +137,7 @@ public class Baseline {
     public static List<Baseline> list() {
         final Config SERVER_CONFIG = Config.getInstance();
 
-        SshTemplate<Vector> foldersTemplate = new SshTemplate<Vector>(SERVER_CONFIG) {
+        SshTemplate<Vector> foldersTemplate = new SshTemplate<Vector>() {
             @Override
             protected Vector processWithSession(Session session) throws Exception {
                 return listDirectoriesUsingSsh(this, session);

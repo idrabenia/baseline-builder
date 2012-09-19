@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
     <webServer>
-        <deploymentPath>/var/tmp</deploymentPath>
+        <deploymentPath>/var/www/html/baselines</deploymentPath>
         <remoteMachine>
             <host>mnsmispais02</host>
             <port>22</port>
